@@ -1,0 +1,64 @@
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<div class="modal-content">
+  <div class="modal-body">
+    <div *ngIf="appointmentDetails">
+      <!-- ข้อมูลอื่นๆ -->
+      <div class="data-row">
+        <span class="label">ชื่อ-นามสกุล:</span>
+        <span class="value">{{ appointmentDetails.first_name }} {{ appointmentDetails.last_name }}</span>
+      </div>
+      <div class="data-row">
+        <span class="label">เบอร์โทรศัพท์:</span>
+        <span class="value">{{ formatPhoneNumber(appointmentDetails.phone) }}</span>
+      </div>
+      <div class="data-row">
+        <span class="label">เลขบัตรประชาชน:</span>
+        <span class="value">{{ formatIdCard(appointmentDetails.id_card) }}</span>
+      </div>
+      <div class="data-row">
+        <span class="label">วันเดือนปีเกิด:</span>
+        <span class="value">{{ appointmentDetails.date_birth | date: 'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="data-row">
+        <span class="label">ที่อยู่:</span>
+        <span class="value">{{ appointmentDetails.house_number }}, {{ appointmentDetails.street }}, {{ appointmentDetails.village }}, {{ appointmentDetails.subdistrict }}, {{ appointmentDetails.district }}, {{ appointmentDetails.province }}.</span>
+      </div>
+      <div class="data-row multi-values">
+        <div class="sub-row">
+          <span class="label">น้ำหนัก:</span>
+          <span class="value">{{ appointmentDetails.weight }} กก.</span>
+        </div>
+        <div class="sub-row">
+          <span class="label">ส่วนสูง:</span>
+          <span class="value">{{ appointmentDetails.height }} ซม.</span>
+        </div>
+        <div class="sub-row">
+          <span class="label">รอบเอว:</span>
+          <span class="value">{{ appointmentDetails.waist }} นิ้ว</span>
+        </div>
+      </div>
+      <!-- ข้อมูลอื่นๆ -->
+      <div class="data-row">
+        <span class="label">ค่า BMI:</span>
+        <span class="value">{{ appointmentDetails.bmi }}</span>
+      </div>
+      <div class="data-row">
+        <span class="label">ค่า รอบเอวต่อส่วนสูง:</span>
+        <span class="value">{{ appointmentDetails.waist_to_height_ratio }}</span>
+      </div>
+      <div class="data-row">
+        <span class="label">โปรแกรมการนัดหมาย:</span>
+        <span class="value">{{ appointmentDetails.program_name }}</span>
+      </div>
+      <div class="data-row">
+        <span class="label">ระดับความเสี่ยง:</span>
+        <span class="value" [ngClass]="{
+          'assessment-high': appointmentDetails.result_program === 'สูง',
+          'assessment-medium': appointmentDetails.result_program === 'ปานกลาง',
+          'assessment-low': appointmentDetails.result_program === 'ต่ำ'
+        }">{{ appointmentDetails.result_program }}</span>
+      </div>
+    </div>
+  </div>
+</div>

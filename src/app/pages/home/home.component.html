@@ -1,0 +1,36 @@
+<nz-layout class="layout">
+  <nz-sider nzCollapsible nzWidth="200px">
+    <div class="logo">
+      <img src="\assets\image\logor.png" alt="logo" />
+    </div>
+    <ul nz-menu nzMode="inline" class="menu1">
+      <li nz-menu-item (click)="navigateToCheck()">
+        <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
+        <span>รายการลงนัด</span>
+      </li>
+      <li nz-menu-item (click)="navigateToHistory()">
+        <span nz-icon nzType="file"></span>
+        <span>รายการที่เข้าตรวจ</span>
+      </li>
+      <li nz-menu-item (click)="navigateToDashboard()">
+        <span nz-icon nzType="pie-chart"></span>
+        <span>DASHBOARD</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header class="header">
+      <div class="header-content">
+        <div class="logo"></div>
+        <button nz-button nzType="default" class="logout-button" (click)="logout()">
+          <span nz-icon nzType="logout"></span>
+        </button>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="site-layout-background" style="padding: 24px; min-height: 280px;">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

@@ -1,0 +1,104 @@
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<div class="grid-item full-width-box">
+  <h3 class="section-title">จำนวนคิวตรวจ</h3>
+  <div class="health-check-wrapper">
+    <div class="input-container">
+      <label>ตรวจสุขภาพ:</label>
+      <nz-input-number
+        [(ngModel)]="healthCheckValue"
+        [nzStep]="1"
+        [nzMin]="0"
+        [nzMax]="100"
+        style="width: 200px"
+        [disabled]="!isEditingHealth"
+      ></nz-input-number>
+      <button nz-button nzType="primary" (click)="toggleEdit('health')">
+        {{ isEditingHealth ? "บันทึก" : "แก้ไข" }}
+      </button>
+    </div>
+    <div class="input-container">
+      <label>HIV:</label>
+      <nz-input-number
+        [(ngModel)]="hivCheckValue"
+        [nzStep]="1"
+        [nzMin]="0"
+        [nzMax]="100"
+        style="width: 200px"
+        [disabled]="!isEditingHiv"
+      ></nz-input-number>
+      <button nz-button nzType="primary" (click)="toggleEdit('hiv')">
+        {{ isEditingHiv ? "บันทึก" : "แก้ไข" }}
+      </button>
+    </div>
+    <div class="input-container">
+      <label>เลิกบุหรี่:</label>
+      <nz-input-number
+        [(ngModel)]="quitSmokingCheckValue"
+        [nzStep]="1"
+        [nzMin]="0"
+        [nzMax]="100"
+        style="width: 200px"
+        [disabled]="!isEditingQuitSmoking"
+      ></nz-input-number>
+      <button nz-button nzType="primary" (click)="toggleEdit('quitSmoking')">
+        {{ isEditingQuitSmoking ? "บันทึก" : "แก้ไข" }}
+      </button>
+    </div>
+  </div>
+</div>
+<div class="header-section">
+  <h2 class="title1">ข้อมูลทั้งหมด</h2>
+  <nz-input-group [nzSuffix]="suffixIconSearch" style="max-width: 800px;">
+    <input type="text" nz-input placeholder="ค้นหา..." [(ngModel)]="searchText" (ngModelChange)="filterData()" />
+  </nz-input-group>
+
+  <select [(ngModel)]="selectedProgram" (change)="filterData()">
+    <option value="ตรวจสุขภาพ">ตรวจสุขภาพ</option>
+    <option value="เลิกบุหรี่">เลิกบุหรี่</option>
+    <option value="HIV">HIV</option>
+  </select>
+</div>
+
+<nz-table
+  [nzData]="filteredData"
+  nzBordered
+  [nzPageSize]="10"
+  nzShowSizeChanger
+  [nzShowQuickJumper]="true"
+>
+  <thead>
+    <tr>
+      <th>ชื่อ</th>
+      <th>นามสกุล</th>
+      <th>เบอร์โทรศัพท์</th>
+      <th>โปรแกรมการนัดหมาย</th>
+      <th>วันนัดหมาย</th>
+      <th>จัดการข้อมูล</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of filteredData; let i = index">
+      <td>{{ data.first_name }}</td>
+      <td>{{ data.last_name }}</td>
+      <td>{{ data.phone }}</td>
+      <td>{{ data.program_name }}</td>
+      <td>{{ data.appointment_date | date:'dd/MM/yyyy' }}</td>
+      <td>
+        <button nz-button nzType="link" class="view-button" (click)="viewData(data)">
+          <span nz-icon nzType="eye"></span>
+        </button>
+        <button nz-button nzType="link" class="delete-button" (click)="deleteRow(data.id)">
+          <span nz-icon nzType="delete"></span>
+        </button>
+        <button nz-button nzType="link" class="download-button" (click)="downloadPDF(data)">
+          <span nz-icon nzType="download"></span>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<ng-template #suffixIconSearch>
+  <span nz-icon nzType="search"></span>
+</ng-template>

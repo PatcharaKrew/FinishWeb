@@ -1,0 +1,67 @@
+* {
+  font-family: 'Sarabun', sans-serif;
+}
+
+
+.health-check-wrapper {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+
+  .input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.input-number-group-example {
+  margin-top: 20px;
+}
+
+
+.delete-button {
+  background-color: #ea4446;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #ff7875;
+  color: white;
+}
+
+.view-button {
+  background-color: #4489ea;
+  color: white;
+  margin-right: 2rem;
+}
+
+.view-button:hover {
+  background-color: #75afff;
+  color: white;
+}
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.nz-input-group {
+  max-width: 200px;
+}
+::ng-deep .ant-modal-title {
+  font-size: 18px; // ขนาดตัวอักษรใหญ่
+  font-weight: bold; // ตัวอักษรหนา
+  text-transform: uppercase; // เปลี่ยนตัวอักษรเป็นตัวพิมพ์ใหญ่ทั้งหมด
+  color: #1b2a49;
+}
+
+::ng-deep .ant-table th {
+  background-color: #1b2a49 !important;
+  color: white !important;
+  font-weight: bold;
+}

@@ -1,0 +1,62 @@
+<div class="body">
+  <div class="con">
+    <div class="upper">
+      <div class="upper-info">
+        <img src="./assets/image/logo2.png" alt="" />
+      </div>
+      <div class="under">
+        <div class="under-info">
+          <h2>เข้าสู่ระบบ</h2>
+          <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your username!">
+                <nz-input-group nzPrefixIcon="user">
+                  <input
+                    type="text"
+                    nz-input
+                    formControlName="userName"
+                    placeholder="input name"
+                    required
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-control nzErrorTip="Please input your password!">
+                <nz-input-group [nzSuffix]="suffixTemplate" nzPrefixIcon="lock">
+                  <input
+                    [type]="passwordVisible ? 'text' : 'password'"
+                    nz-input
+                    formControlName="password"
+                    placeholder="Password"
+                    required
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+            <ng-template #suffixTemplate>
+              <span
+                nz-icon
+                [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                (click)="passwordVisible = !passwordVisible"
+              ></span>
+            </ng-template>
+
+            <div nz-row class="login-form-margin remember">
+              <div nz-col [nzSpan]="12">
+                <label nz-checkbox formControlName="remember">
+                  <span>Remember me</span>
+                </label>
+              </div>
+            </div>
+
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">
+              เข้าสู่ระบบ
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

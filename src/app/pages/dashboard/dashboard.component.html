@@ -1,0 +1,148 @@
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<h1>DASHBOARD</h1>
+<div class="custom-select">
+  <div class="input-container">
+    <label for="year">เลือกปี :</label>
+    <nz-select [(ngModel)]="selectedYear" (ngModelChange)="onYearChange()" style>
+      <nz-option *ngFor="let year of years" [nzValue]="year" [nzLabel]="year"></nz-option>
+    </nz-select>
+  </div>
+
+  <div class="input-container" *ngIf="showMonthDropdown">
+    <label for="month">เลือกเดือน :</label>
+    <nz-select [(ngModel)]="selectedMonth" (ngModelChange)="onMonthChange()">
+      <nz-option *ngFor="let month of months" [nzValue]="month" [nzLabel]="month"></nz-option>
+    </nz-select>
+  </div>
+</div>
+<div class="dashboard-grid">
+  <!-- Removed the Dashboard Overview -->
+  <!-- Stats Cards (4 columns for 4 stats) -->
+  <div class="grid-item stats-card">
+    <mat-card class="custom-card">
+      <mat-icon class="custom-icon1"> local_hospital</mat-icon>
+      <mat-card-title>จำนวนลงนัดตรวจสุขภาพ</mat-card-title>
+      <mat-card-content>{{ healthCheckCount }} คน</mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="grid-item stats-card">
+    <mat-card class="custom-card">
+      <mat-icon class="custom-icon2">add_circle</mat-icon>
+      <mat-card-title>จำนวนผู้ลงนัดHIV</mat-card-title>
+      <mat-card-content>{{ hivCheckCount }} คน</mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="grid-item stats-card">
+    <mat-card class="custom-card">
+      <mat-icon class="custom-icon3">smoke_free</mat-icon>
+      <mat-card-title>จำนวนลงนัดเลิกบุหรี่</mat-card-title>
+      <mat-card-content>{{ quitSmokingCount }} คน</mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="grid-item stats-card">
+    <mat-card class="custom-card">
+      <mat-icon class="custom-icon4">verified_user</mat-icon>
+      <mat-card-title>จำนวนเข้าตรวจทั้งหมด</mat-card-title>
+      <mat-card-content>{{ totalCheckCount }} คน</mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Bar Chart (Large Box - 2 columns wide) -->
+  <div class="grid-item large-box">
+    <h2>กราฟความเสี่ยงประจำปี</h2>
+    <div class="input-container">
+      <label for="yearRisk">ความเสี่ยงในปี :</label>
+      <nz-select [(ngModel)]="selectedRiskYear" (ngModelChange)="loadRiskLevelData()">
+        <nz-option *ngFor="let year of years" [nzValue]="year" [nzLabel]="year"></nz-option>
+      </nz-select>
+    </div>
+    <ngx-charts-bar-vertical-2d
+      [results]="riskLevelData"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      xAxisLabel="เดือน"
+      yAxisLabel="จำนวนผู้เข้ามาตรวจ(คน)"
+      [barPadding]="6"
+      [groupPadding]="8"
+      [yScaleMax]="getMaxValue(riskLevelData)"
+      [yAxisTickFormatting]="yAxisTickFormat"
+      [view]="[830, 300]"
+    ></ngx-charts-bar-vertical-2d>
+  </div>
+
+  <!-- Pie Chart (Medium Box) -->
+  <div class="grid-item medium-box-1">
+    <h2>จำนวนผู้เข้าตรวจ</h2>
+    <ngx-charts-pie-chart
+      [results]="appointmentPieChartData"
+      [explodeSlices]="true"
+      [labels]="true"
+      [doughnut]="true"
+      [view]="[340, 340]"
+    ></ngx-charts-pie-chart>
+  </div>
+
+  <!-- Full Width Box for Additional Content -->
+  <!-- <div class="grid-item full-width-box">
+    <div class="health-check-wrapper">
+      <div class="input-container">
+        <label>ตรวจสุขภาพ:</label>
+        <nz-input-number
+          [(ngModel)]="healthCheckValue"
+          [nzStep]="1"
+          [nzMin]="0"
+          [nzMax]="100"
+          style="width: 200px"
+          [disabled]="!isEditingHealth"
+        ></nz-input-number>
+        <button nz-button nzType="primary" (click)="toggleEdit('health')">
+          {{ isEditingHealth ? "บันทึก" : "แก้ไข" }}
+        </button>
+      </div>
+      <div class="input-container">
+        <label>HIV:</label>
+        <nz-input-number
+          [(ngModel)]="hivCheckValue"
+          [nzStep]="1"
+          [nzMin]="0"
+          [nzMax]="100"
+          style="width: 200px"
+          [disabled]="!isEditingHiv"
+        ></nz-input-number>
+        <button nz-button nzType="primary" (click)="toggleEdit('hiv')">
+          {{ isEditingHiv ? "บันทึก" : "แก้ไข" }}
+        </button>
+      </div>
+      <div class="input-container">
+        <label>เลิกบุหรี่:</label>
+        <nz-input-number
+          [(ngModel)]="quitSmokingCheckValue"
+          [nzStep]="1"
+          [nzMin]="0"
+          [nzMax]="100"
+          style="width: 200px"
+          [disabled]="!isEditingQuitSmoking"
+        ></nz-input-number>
+        <button nz-button nzType="primary" (click)="toggleEdit('quitSmoking')">
+          {{ isEditingQuitSmoking ? "บันทึก" : "แก้ไข" }}
+        </button>
+      </div>
+    </div>
+  </div> -->
+
+</div>
+<div class="grid-item REbox">
+  <mat-card class="custom-card">
+    <h2>จำนวนรวมของความเสี่ยงประจำปี</h2>
+    <mat-card-title>จำนวนเสี่ยงสูงรวม : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ riskLevelSummary.highRisk }} คน</mat-card-title>
+    <mat-card-title>จำนวนเสี่ยงปานกลางรวม : &nbsp;&nbsp;&nbsp; {{ riskLevelSummary.mediumRisk }} คน</mat-card-title>
+    <mat-card-title>จำนวนเสี่ยงต่ำรวม : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ riskLevelSummary.lowRisk }} คน</mat-card-title>
+  </mat-card>
+</div>
